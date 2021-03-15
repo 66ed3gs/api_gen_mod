@@ -1,0 +1,20 @@
+name: build
+on:
+  push:
+    tags:
+    - "v*"
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build
+        uses: goreleaser/goreleaser-action@v1
+        with:
+          version: latest
+          args: release --rm-dist
+          workdir: server_generator
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
